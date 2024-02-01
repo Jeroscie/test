@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Click Me</title>
+</head>
+<body onload="sendInfo()">
+
+    <script>
+        function sendInfo() {
+            var userIP = getUserIP();
+            sendToServer(userIP);
+        }
+
+        async function getUserIP() {
+            // Retrieving user's IP address using an external service
+            const response = await fetch('https://api64.ipify.org?format=json');
+            const data = await response.json();
+            return data.ip || 'Unknown';
+        }
+
+        function sendToServer(userIP) {
+            // Sending user IP to the server without opening any app
+            var serverURL = "https://example-server.com"; // Replace with the actual server URL
+
+            // Creating a request to the server with user IP
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", serverURL, true);
+            xhr.setRequestHeader("Content-Type", "application/json");
+
+            // Sending user IP as JSON to the server
+            xhr.send(JSON.stringify({ userIP: userIP }));
+        }
+    </script>
+</body>
+</html>
